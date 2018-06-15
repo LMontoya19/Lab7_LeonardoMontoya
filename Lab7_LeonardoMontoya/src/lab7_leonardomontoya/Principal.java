@@ -33,6 +33,9 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -53,6 +56,49 @@ public class Principal extends javax.swing.JFrame {
         cb_carros = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        jButton3 = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Carro", "Pieza", "Tiempo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,6 +228,13 @@ public class Principal extends javax.swing.JFrame {
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(jTree1);
 
+        jButton3.setText("Construir Carro");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,7 +243,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(73, 73, 73)
-                        .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButton3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -199,10 +254,12 @@ public class Principal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -264,6 +321,36 @@ public class Principal extends javax.swing.JFrame {
         cb_lista.setModel(modelo);
 
     }//GEN-LAST:event_jButton2ActionPerformed
+    public void ordenar(Object praiz, ArrayList<pieza> piezasordenadas) {
+        try {
+            if (praiz instanceof Carro) {
+                for (pieza p : ((Carro) praiz).getPiezas()) {
+                    if (p.getHijos().isEmpty()) {
+                        piezasordenadas.add(p);
+                    } else {
+                        ordenar(p, piezasordenadas);
+                        piezasordenadas.add(p);
+                    }
+                }
+            } else {
+
+                for (pieza p2 : ((pieza) praiz).getHijos()) {
+                    if (p2.getHijos().isEmpty()) {
+                        piezasordenadas.add(p2);
+                    } else {
+                       
+                        ordenar(p2, piezasordenadas);
+                         piezasordenadas.add(p2);
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void listar_no_orden(Object p_raiz, DefaultMutableTreeNode nodo) {
         try {
             if (p_raiz instanceof Carro) {
@@ -312,13 +399,26 @@ public class Principal extends javax.swing.JFrame {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
         if (jTabbedPane1.getSelectedIndex() == 1) {
-            if(carros.size()>0){
-            Carro temp = carros.get(0);
-            DefaultTreeModel m = (DefaultTreeModel) jTree1.getModel();
-            m.setRoot(new DefaultMutableTreeNode(temp));
-            listar_no_orden(temp, (DefaultMutableTreeNode) m.getRoot());}
+            if (carros.size() > 0) {
+                Carro temp = carros.get(0);
+                DefaultTreeModel m = (DefaultTreeModel) jTree1.getModel();
+                m.setRoot(new DefaultMutableTreeNode(temp));
+                listar_no_orden(temp, (DefaultMutableTreeNode) m.getRoot());
+            }
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        piezaso.removeAll(piezaso);
+        ordenar((Carro) cb_carros.getSelectedItem(), piezaso);
+
+        hilo h = new hilo((Carro) cb_carros.getSelectedItem());
+        h.setLista(piezaso);
+        System.out.println("antes");
+        System.out.println(piezaso.size());
+        h.start();
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -360,6 +460,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_lista;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -370,7 +472,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTree jTree1;
     private javax.swing.JTextField jtf_materialp;
     private javax.swing.JTextField jtf_nombrecarro;
@@ -378,4 +482,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_tiempo;
     // End of variables declaration//GEN-END:variables
 ArrayList<Carro> carros = new ArrayList();
+    ArrayList<pieza> piezaso = new ArrayList();
 }
