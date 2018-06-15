@@ -412,9 +412,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         piezaso.removeAll(piezaso);
         ordenar((Carro) cb_carros.getSelectedItem(), piezaso);
-
         hilo h = new hilo((Carro) cb_carros.getSelectedItem());
-        h.setLista(piezaso);
         System.out.println("antes");
         System.out.println(piezaso.size());
         h.start();
