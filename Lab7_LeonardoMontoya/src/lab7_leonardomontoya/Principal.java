@@ -5,7 +5,11 @@
  */
 package lab7_leonardomontoya;
 
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -36,9 +40,9 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jtf_nombrepieza = new javax.swing.JTextField();
+        jtf_materialp = new javax.swing.JTextField();
+        jtf_tiempo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -46,8 +50,17 @@ public class Principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        cb_carros = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Crear Carro");
 
@@ -62,9 +75,9 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jtf_tiempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jtf_tiempoActionPerformed(evt);
             }
         });
 
@@ -77,6 +90,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setText("Padre");
 
         jButton2.setText("Crear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,18 +119,18 @@ public class Principal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtf_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jtf_materialp, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtf_nombrepieza, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -138,31 +156,54 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_nombrepieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cb_lista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_materialp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Creacion", jPanel1);
 
+        cb_carros.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_carrosItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jTree1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 542, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 374, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(cb_carros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
 
         jTabbedPane1.addTab("tab2", jPanel2);
@@ -185,16 +226,99 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jtf_tiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_tiempoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_jtf_tiempoActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        carros.add(new Carro(jtf_nombrecarro.getText()));
+        Carro temp = new Carro(jtf_nombrecarro.getText());
+        carros.add(temp);
         jtf_nombrecarro.setText("");
-        
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_lista.getModel();
+        modelo.addElement(temp);
+        cb_lista.setModel(modelo);
+        DefaultComboBoxModel modelo2 = (DefaultComboBoxModel) cb_carros.getModel();
+        modelo2.addElement(temp);
+        cb_carros.setModel(modelo2);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        pieza temp;
+        String material = jtf_materialp.getText();
+        String nombre = jtf_nombrepieza.getText();
+        int tiempo = Integer.parseInt(jtf_tiempo.getText());
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_lista.getModel();
+        if (modelo.getSelectedItem() instanceof Carro) {
+            Carro padre = carros.get(carros.indexOf((Carro) modelo.getSelectedItem()));
+            temp = new pieza(padre, nombre, material, tiempo);
+            padre.getPiezas().add(temp);
+            modelo.addElement(temp);
+        } else {
+            pieza padre = (pieza) modelo.getSelectedItem();
+            temp = new pieza(padre, nombre, material, tiempo);
+            padre.getHijos().add(temp);
+            modelo.addElement(temp);
+        }
+        cb_lista.setModel(modelo);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+    public void listar_no_orden(Object p_raiz, DefaultMutableTreeNode nodo) {
+        try {
+            if (p_raiz instanceof Carro) {
+                for (pieza p : ((Carro) p_raiz).getPiezas()) {
+
+                    if (p.getHijos().isEmpty()) {
+                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(p);
+                        nodo.add(n);
+                    } else {
+                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(p);
+                        nodo.add(n);
+                        listar_no_orden(p, n);
+                    }
+                }
+            } else {
+
+                for (pieza p2 : ((pieza) p_raiz).getHijos()) {
+                    if (p2.getHijos().isEmpty()) {
+                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(p2);
+                        nodo.add(n);
+                    } else {
+                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(p2);
+                        nodo.add(n);
+                        listar_no_orden(p2, n);
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void cb_carrosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_carrosItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() > 0) {
+            Carro temp = (Carro) cb_carros.getSelectedItem();
+            DefaultTreeModel m = (DefaultTreeModel) jTree1.getModel();
+            m.setRoot(new DefaultMutableTreeNode(temp));
+            listar_no_orden(temp, (DefaultMutableTreeNode) m.getRoot());
+
+        }
+
+    }//GEN-LAST:event_cb_carrosItemStateChanged
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
+        if (jTabbedPane1.getSelectedIndex() == 1) {
+            if(carros.size()>0){
+            Carro temp = carros.get(0);
+            DefaultTreeModel m = (DefaultTreeModel) jTree1.getModel();
+            m.setRoot(new DefaultMutableTreeNode(temp));
+            listar_no_orden(temp, (DefaultMutableTreeNode) m.getRoot());}
+        }
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     /**
      * @param args the command line arguments
@@ -232,6 +356,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_carros;
     private javax.swing.JComboBox<String> cb_lista;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -244,11 +369,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTree jTree1;
+    private javax.swing.JTextField jtf_materialp;
     private javax.swing.JTextField jtf_nombrecarro;
+    private javax.swing.JTextField jtf_nombrepieza;
+    private javax.swing.JTextField jtf_tiempo;
     // End of variables declaration//GEN-END:variables
 ArrayList<Carro> carros = new ArrayList();
 }

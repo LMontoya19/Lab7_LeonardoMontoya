@@ -13,24 +13,24 @@ import java.util.ArrayList;
  */
 public class pieza {
 
-    pieza padre;
+    Object padre;
     ArrayList<pieza> hijos = new ArrayList();
     String nombre;
     String material;
     int tiempo;
 
-    public pieza(pieza padre, String nombre, String material, int tiempo) {
+    public pieza(Object padre, String nombre, String material, int tiempo) {
         this.padre = padre;
         this.nombre = nombre;
         this.material = material;
         this.tiempo = tiempo;
     }
 
-    public pieza getPadre() {
+    public Object getPadre() {
         return padre;
     }
 
-    public void setPadre(pieza padre) {
+    public void setPadre(Object padre) {
         this.padre = padre;
     }
 
