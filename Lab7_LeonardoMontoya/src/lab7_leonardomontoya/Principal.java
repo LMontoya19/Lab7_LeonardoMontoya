@@ -338,9 +338,9 @@ public class Principal extends javax.swing.JFrame {
                     if (p2.getHijos().isEmpty()) {
                         piezasordenadas.add(p2);
                     } else {
-                       
+
                         ordenar(p2, piezasordenadas);
-                         piezasordenadas.add(p2);
+                        piezasordenadas.add(p2);
                     }
 
                 }
